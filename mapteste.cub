@@ -1,0 +1,11 @@
+R 800 600
+S ./text/barrel.xpm
+NO ./text/clari.xpm
+WE ./text/nat.xpm
+SO ./text/tucos.xpm
+EA ./text/dani.xpm
+
+F  179,204,204
+C  128,191,255
+
+
