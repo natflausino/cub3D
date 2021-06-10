@@ -35,8 +35,11 @@ void	map_extract(t_game *game, char *line, int fd)
 	gnl = -1;
 	if (game->file.args != 8)
 	{
-		free(&game->file.args);
 		return_error(-18);
+	}
+	if (game->floor_bool == 0 || game->celling_bool == 0)
+	{
+		return_error(-24);
 	}
 	str = ft_strjoin(line, "@");
 	while (gnl != 0)
@@ -102,13 +105,13 @@ void	map_check(t_game *game, char **tab)
 					if (tab[i - 1][j] != '1' && tab[i - 1][j] != ' ')
 					{
 						table_free(tab);
-						return_error(-17);// ta certo esse erro?
+						return_error(-16);
 					}
 				if (i < game->file.map_row - 1)
 					if (tab[i + 1][j] != '1' && tab[i + 1][j] != ' ')
 					{
 						table_free(tab);
-						return_error(-17);// ta certo esse erro?
+						return_error(-16);
 					}
 			}
 			i++;

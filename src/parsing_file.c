@@ -52,7 +52,7 @@ void	check_line(t_game *game, char *line, int fd)
 	}
 }
 
-void	max_line_size(int fd, t_game *game)
+int	max_line_size(int fd)
 {
 	int		max;
 	int		size;
@@ -62,7 +62,7 @@ void	max_line_size(int fd, t_game *game)
 	gnl = 1;
 	size = 0;
 	max = 0;
-	line = NULL;
+	//line = NULL;
 	while (gnl != 0)
 	{
 		gnl = get_next_line(fd, &line);
@@ -70,13 +70,11 @@ void	max_line_size(int fd, t_game *game)
 		{
 			size = ft_strlen(line);
 			if (size > max)
-			{
 				max = size;
-				game->file.max_line = max;
-			}
 		}
 		free(line);
 	}
+	return (max);
 }
 
 void	reset_path(t_game *game)

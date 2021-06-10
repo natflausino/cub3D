@@ -183,6 +183,8 @@ typedef struct s_game
 	t_player	player;
 	t_ray		ray;
 	t_file		file;
+	int			floor_bool;
+	int			celling_bool;
 }				t_game;
 
 /******************************************************************************
@@ -195,7 +197,7 @@ void	get_param(t_game *game, char *line);
 int		check_param(char *line);
 void	check_file(int	argc, char **argv, t_game *game);
 void	read_file(t_game *game, char *file);
-void	max_line_size(int fd, t_game *game);
+int		max_line_size(int fd);
 void	is_map_closed(t_game *game, char **tab);
 void	map_check(t_game *game, char **tab);
 void	map_error(t_game *game);

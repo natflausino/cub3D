@@ -106,8 +106,14 @@ void	get_param(t_game *game, char *line)
 		get_texture(line + 2, &game->file.ea_path);
 	else if (line[0] == 'S' && line[1] == ' ')
 		get_texture(line + 1, &game->file.s_path);
-	else if (line[0] == 'F')
+	else if (line[0] == 'F' && game->floor_bool == 0)
+	{
+		game->floor_bool = 1;
 		game->file.color_floor = (int)get_color(line + 1);
-	else if (line[0] == 'C')
+	}
+	else if (line[0] == 'C' && game->celling_bool == 0)
+	{
+		game->celling_bool = 1;
 		game->file.color_ceiling = (int)get_color(line + 1);
+	}
 }

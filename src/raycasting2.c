@@ -7,8 +7,8 @@ void	check_horiz(t_game *game, int *horzhit)
 
 	next_x = game->ray.interc_x;
 	next_y = game->ray.interc_y;
-	while (next_x >= 0 && next_x <= (game->block * game->file.max_line)
-		&& next_y >= 0 && next_y <= (game->block * game->file.map_row))
+	while (next_x >= 0 && next_x < (game->block * game->file.max_line)
+		&& next_y >= 0 && next_y < (game->block * game->file.map_row))
 	{
 		if (is_wall(game, next_x, (next_y - game->ray.face_up)) == '1')
 		{
@@ -52,8 +52,8 @@ void	check_vert(t_game *game, int *verthit)
 
 	next_x = game->ray.interc_x;
 	next_y = game->ray.interc_y;
-	while (next_x >= 0 && next_x <= (game->block * game->file.max_line)
-		&& next_y >= 0 && next_y <= (game->block * game->file.map_row))
+	while (next_x >= 0 && next_x < (game->block * game->file.max_line)
+		&& next_y >= 0 && next_y < (game->block * game->file.map_row))
 	{
 		if (is_wall(game, (next_x - game->ray.face_le), next_y) == '1')
 		{

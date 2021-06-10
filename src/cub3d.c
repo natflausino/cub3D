@@ -12,7 +12,7 @@ void	read_file(t_game *game, char *file)
 	reset_path(game);
 	fd = open(file, O_RDONLY);
 	fd1 = open(file, O_RDONLY);
-	max_line_size(fd1, game);
+	game->file.max_line = max_line_size(fd1);
 	while (gnl != 0)
 	{
 		gnl = get_next_line(fd, &line);
@@ -21,8 +21,7 @@ void	read_file(t_game *game, char *file)
 	}
 	if (!game->file.map_row)
 	{
-		//free(file);
-		return_error(-18);
+		return_error(-17);
 	}
 	if (!game->file.so_path || !game->file.s_path || !game->file.we_path
 		|| !game->file.no_path || !game->file.ea_path)
@@ -30,9 +29,6 @@ void	read_file(t_game *game, char *file)
 		free_textures(game);
 		return_error(-21);
 	}
-	//free(line);
-	//close(fd);
-	//close(fd1);
 }
 
 void	check_file(int	argc, char **argv, t_game *game)
@@ -75,12 +71,12 @@ void	set_param(t_game *game)
 	game->block = 64;
 	game->file.player_found = 0;
 	game->ray.dist_wall = (int *)malloc(sizeof(int) * game->file.width);
-	//ft_memset(game->ray.dist_wall, 0, sizeof(game->ray.dist_wall));
+	ft_memset(game->ray.dist_wall, 0, sizeof(game->ray.dist_wall));
 	num_sprites(game);
 	game->sprite = malloc(sizeof(t_sprite) * (game->num_sprite + 1));
-	//ft_memset(game->sprite, 0, sizeof(game->sprite));
+	ft_memset(game->sprite, 0, sizeof(game->sprite));
 	game->tex = malloc(sizeof(t_tex) * 7);
-	//ft_memset(game->tex, 0, sizeof(game->tex));
+	ft_memset(game->tex, 0, sizeof(game->tex));
 	texture_load(game);
 	player_position(game);
 	player_facing(game);
@@ -91,17 +87,20 @@ void	set_param(t_game *game)
 	game->player.left_right = 0;
 	game->player.walk_speed = 5;
 	game->player.turn_speed = 1.3 * (PI / 180);
+	game->floor_bool = 0;
+	game->celling_bool = 0;
 }
 
 int	main(int argc, char **argv)
 {
 	t_game	game;
 
-	//ft_memset(&game, 0, sizeof(t_game));
+	ft_memset(&game, 0, sizeof(t_game));
 	game.data.mlx = mlx_init();
 	check_file(argc, argv, &game);
 	//if (game.file.map_row != 0)
 	set_param(&game);
+	if (game.init == 0)
 	game.data.win = mlx_new_window(game.data.mlx,
 			game.file.width, game.file.height, "Cub3D");
 	game.data.img = mlx_new_image(game.data.mlx,
@@ -109,10 +108,13 @@ int	main(int argc, char **argv)
 	game.data.addr = (int *)mlx_get_data_addr(game.data.img,
 			&game.data.bpp, &game.data.line_len, &game.data.endian);
 	draw(&game);
-	mlx_hook(game.data.win, KEYPRESS, (1l << 0), press_key, &game);
-	mlx_hook(game.data.win, KEYRELEASE, (1l << 1), release_key, &game);
-	mlx_hook(game.data.win, WIN_BUTTON_X, (1l << 17), close_window, &game);
-	mlx_loop_hook(game.data.mlx, update, &game);
-	mlx_loop(game.data.mlx);
+	if (game.init == 0)
+	{
+		mlx_hook(game.data.win, KEYPRESS, (1l << 0), press_key, &game);
+		mlx_hook(game.data.win, KEYRELEASE, (1l << 1), release_key, &game);
+		mlx_hook(game.data.win, WIN_BUTTON_X, (1l << 17), close_window, &game);
+		mlx_loop_hook(game.data.mlx, update, &game);
+		mlx_loop(game.data.mlx);
+	}
 	return (0);
 }

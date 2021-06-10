@@ -39,7 +39,7 @@ static void	print_error_1(int err)
 	if (err == -17)
 		ft_putendl("Error\nMap not found in provided file.\n\n");
 	if (err == -18)
-		ft_putendl("Error\nMissconfiguration on file.\n\n");
+		ft_putendl("Error\nMisconfiguration on file.\n\n");
 	if (err == -19)
 		ft_putendl("Error\nPlayer not found. Include N, S, E or W in map.\n\n");
 }
@@ -59,7 +59,7 @@ static void	print_error_2(int err)
 		ft_putendl("Error\nExpected a <file>.xpm.\n\n");
 	if (err == -24)
 	{
-		ft_putendl("Error\nWrong color parameter for ceiling or floor\n");
+		ft_putendl("Error\nWrong color parameter for ceiling or floor");
 		ft_putendl("Expected R,G,B color between 0-255. Try: 0, 255, 255.\n\n");
 	}
 }

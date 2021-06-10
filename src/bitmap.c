@@ -36,13 +36,15 @@ void	fill_data(t_bmp *bmp, t_game *game)
 	bmp->clr_imported = 0;
 }
 
-void	image_create(t_game *game)//PRECISA ERRO?
+void	image_create(t_game *game)
 {
 	t_bmp	bmp;
 	int		file;
 
 	file = 0;
-	file = open("./screen_shot.bmp", O_RDWR | O_CREAT, 777);
+	file = open("./screen_shot.bmp", O_CREAT | O_WRONLY | O_TRUNC, 0666);
+	if (!file)
+		return_error(-14);
 	fill_data(&bmp, game);
 	image_header(&bmp, file);
 	image_put(game, &bmp, file);

@@ -6,7 +6,7 @@
 #    By: sbertali <sbertali@student.42sp.org.br>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/04/14 23:45:31 by sbertali          #+#    #+#              #
-#    Updated: 2021/05/07 23:12:11 by sbertali         ###   ########.fr        #
+#    Updated: 2021/05/11 21:35:16 by sbertali         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,7 @@ INCLUDES = -I includes
 
 CC = clang
 FLAGS = -Wall -Wextra -Werror
+SANITIZE = @$(CC) $(FLAGS) -w -g -fsanitize=address -o $(NAME) $(OBJECTS) -L $(MLX_PATH) $(MLX_FLAGS) -I $(LIBFT_PATH) $(LIBFT_FLAGS)
 
 SRC =	$(SRC_PATH)cub3d.c\
 		$(SRC_PATH)bitmap.c\
@@ -73,7 +74,7 @@ $(LIBFT):
 	@make -C $(LIBFT_PATH)
 
 $(OBJECTS): $(SRC_PATH) $(SRC)
-	@$(CC) $(FLAGS) -g -c $(SRC)
+	@$(CC) $(FLAGS) -w -g -c $(SRC)
 
 clean:
 	@make -C $(MLX_PATH) clean
@@ -84,7 +85,11 @@ fclean:
 	@rm -f $(NAME)
 	@make -C $(MLX_PATH) clean
 	@make -C $(LIBFT_PATH) fclean
-	@rm -f $(OBJECTS) $(NAME)
+	@rm -f $(OBJECTS) $(NAME) screen_shot.bmp
 
-#@$(CC) $(FLAGS) -w -fsanitize=address -g -o $(NAME) $(OBJECTS) -L $(MLX_PATH) $(MLX_FLAGS) -I $(LIBFT_PATH) $(LIBFT_FLAGS)
+re: fclean all
+
+san: all
+	@$(SANITIZE)
+
 #valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
