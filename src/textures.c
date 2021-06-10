@@ -64,6 +64,11 @@ void	free_textures(t_game *game)
 		free(game->file.we_path);
 		game->file.we_path = NULL;
 	}
+	free_textures2(game);
+}
+
+void	free_textures2(t_game *game)
+{
 	if (game->file.d_path)
 	{
 		mlx_destroy_image(game->data.mlx, game->tex[D_TEX].img);

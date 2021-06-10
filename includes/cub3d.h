@@ -146,6 +146,7 @@ void	num_sprites(t_game *game);
 void	texture_select(t_game *game);
 void	texture_ident(t_game *game);
 void	free_textures(t_game *game);
+void	free_textures2(t_game *game);
 void	texture_load(t_game *game);
 void	calculate_texture(t_game *game, int *x_tex, int side);
 
@@ -159,6 +160,7 @@ int		is_wall(t_game *game, int x, int y);
 int		check_wall(t_game *game, double new_x, double new_y);
 void	color_floor_ceiling(t_game *game, double wall_height, int i);
 void	floor_texture(t_game *game, int i, int j, double wall_height);
+int     limbo_color(t_game *game, int color);
 
 /******************************************************************************
 **	BONUS

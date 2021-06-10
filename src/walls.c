@@ -18,17 +18,22 @@ void	draw_strip(t_game *game, int x, int side, int strip_height)
 		start = 0;
 		game->end = game->file.height;
 	}
-	color = 0;
 	while (start < game->end)
 	{
 		y_tex = i * game->tex[side].tex_height / (double)strip_height;
 		color = game->tex[WALL].addr[y_tex * game->tex[side].tex_width + x_tex];
-		if (game->life <= 1)
-			color = 0xFFFFFF;
+		color = limbo_color(game, color);
 		game->data.addr[start * game->file.width + x] = color;
 		i++;
 		start++;
 	}
+}
+
+int	limbo_color(t_game *game, int color)
+{
+	if (game->life <= 1)
+		color = 0xFFFFFF;
+	return (color);
 }
 
 void	render_projection_walls(t_game *game, int i)
@@ -118,8 +123,7 @@ void	color_floor_ceiling(t_game *game, double wall_height, int i)
 	while (j < start)
 	{
 		color = game->file.color_ceiling;
-		if (game->life <= 1)
-			color = 0xFFFFFF;
+		color = limbo_color(game, color);
 		if (j * game->file.width + i > 0)
 			game->data.addr[j * game->file.width + i] = color;
 		j++;
@@ -140,9 +144,8 @@ void	floor_texture(t_game *game, int i, int j, double wall_height)
 		y_tex = j * game->tex[F_TEX].tex_height / (double)wall_height;
 		color = game->tex[F_TEX].addr[(int)(x_tex
 				* game->tex[F_TEX].tex_height + y_tex)];
-		if (game->life <= 1)
-			color = 0xFFFFFF;
-		if (color > 0x00FF00)
+		color = limbo_color(game, color);
+		if (color > 0x00ff00)
 			game->data.addr[j * game->file.width + i] = color;
 		j++;
 	}
