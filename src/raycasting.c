@@ -75,7 +75,7 @@ void	raycast(t_game *game, double rayangle)
 	find_dist(game, horzhit, verthit);
 }
 
-void	castrays(t_game *game)
+void	cast_all_rays(t_game *game)
 {
 	int		walls;
 	double	rayangle;
@@ -96,5 +96,9 @@ void	castrays(t_game *game)
 		render_projection_walls(game, i);
 		i++;
 	}
+	load_sprite(game);
 	render_sprite(game);
+	//minimap(game);
+	// minimap_player(game);
+	// minimap_rays(game);
 }

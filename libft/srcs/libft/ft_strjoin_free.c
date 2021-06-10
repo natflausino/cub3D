@@ -1,29 +1,14 @@
 #include "libft.h"
 
-char	*ft_strjoin_free(char *dest, char *src)
+char	*ft_strjoin_free(char *s1, char *s2)
 {
-	char	*new_str;
-	int		i;
-	int		dest_len;
-	int		src_len;
+	char		*tmp;
 
-	if (!dest || !src)
-		return (NULL);
-	i = -1;
-	dest_len = ft_strlen(dest);
-	src_len = ft_strlen(src);
-	new_str = malloc((dest_len + src_len + 1) * sizeof(*new_str));
-	if (!new_str)
-	{
-		ft_strdel(&dest);
-		return (NULL);
-	}
-	while (dest[++i])
-		new_str[i] = dest[i];
-	i = -1;
-	while (src[++i])
-		new_str[dest_len++] = src[i];
-	new_str[dest_len] = '\0';
-	ft_strdel(&dest);
-	return (new_str);
+	tmp = ft_strdup(s1);
+	free(s1);
+	s1 = ft_strjoin(s2, tmp);
+	free(tmp);
+	free(s2);
+	s2 = NULL;
+	return (s1);
 }

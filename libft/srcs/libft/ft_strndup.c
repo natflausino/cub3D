@@ -4,7 +4,7 @@ char	*ft_strndup(const char *str, size_t n)
 {
 	char	*temp;
 
-	temp = (char *)malloc(sizeof(char) * n + 1);
+	temp = (char *)ft_calloc(1, sizeof(char) * n + 1);
 	if (temp == NULL)
 		return (NULL);
 	else

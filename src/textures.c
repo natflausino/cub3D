@@ -18,6 +18,10 @@ void	texture_select(t_game *game)
 		game->tex[WALL].addr = (int *)mlx_get_data_addr(game->tex[E_TEX].img,
 				&game->tex[E_TEX].bpp, &game->tex[E_TEX].l_len,
 				&game->tex[E_TEX].endian);
+	if (game->door == 1)
+		game->tex[WALL].addr = (int *)mlx_get_data_addr(game->tex[D_TEX].img,
+				&game->tex[D_TEX].bpp, &game->tex[D_TEX].l_len,
+				&game->tex[D_TEX].endian);
 }
 
 void	texture_ident(t_game *game)
@@ -30,6 +34,8 @@ void	texture_ident(t_game *game)
 		game->ident = W_TEX;
 	if (game->ray.was_hit_v == 1 && game->ray.face_le)
 		game->ident = E_TEX;
+	if (game->door == 1)
+		game->ident = D_TEX;
 }
 
 void	free_textures(t_game *game)
@@ -42,8 +48,10 @@ void	free_textures(t_game *game)
 		free(game->file.ea_path);
 	if (game->file.we_path)
 		free(game->file.we_path);
-	if (game->file.s_path)
-		free(game->file.s_path);
+	if (game->file.d_path)
+		free(game->file.d_path);
+	if (game->file.f_path)
+		free(game->file.f_path);
 }
 
 void	texture_load(t_game *game)
@@ -60,11 +68,14 @@ void	texture_load(t_game *game)
 	game->tex[W_TEX].img = mlx_xpm_file_to_image(game->data.mlx,
 			game->file.we_path, &game->tex[W_TEX].tex_width,
 			&game->tex[W_TEX].tex_height);
-	game->tex[SP].img = mlx_xpm_file_to_image(game->data.mlx,
-			game->file.s_path, &game->tex[SP].tex_width,
-			&game->tex[SP].tex_height);
-	game->tex[SP].addr = (int *)mlx_get_data_addr(game->tex[SP].img,
-			&game->tex[SP].bpp, &game->tex[SP].l_len, &game->tex[SP].endian);
+	game->tex[F_TEX].img = mlx_xpm_file_to_image(game->data.mlx,
+			game->file.f_path, &game->tex[F_TEX].tex_width,
+			&game->tex[F_TEX].tex_height);
+	game->tex[F_TEX].addr = (int *)mlx_get_data_addr(game->tex[F_TEX].img,
+			&game->tex[F_TEX].bpp, &game->tex[F_TEX].l_len, &game->tex[F_TEX].endian);
+	game->tex[D_TEX].img = mlx_xpm_file_to_image(game->data.mlx,
+			game->file.d_path, &game->tex[D_TEX].tex_width,
+			&game->tex[D_TEX].tex_height);
 }
 
 void	calculate_texture(t_game *game, int *x_tex, int side)

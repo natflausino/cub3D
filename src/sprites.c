@@ -20,16 +20,24 @@ void	draw_sprite(t_game *game, int x, int s_pos, int sp)
 
 	i = 0;
 	y = 0;
-	start = game->file.height / 2 - game->s_height / 2;
-	end = game->file.height / 2 + game->s_height / 2;
+	//if (game->player.jump == 1)
+	//{
+	//	start = 2 * game->file.height / 3 - game->s_height / 2;
+	//	end = 2 * game->file.height / 3 + game->s_height / 2;
+	//}
+	//else
+	//{
+		start = game->file.height / 2 - game->s_height / 2;
+		end = game->file.height / 2 + game->s_height / 2;
+	//}
 	sprite_height(game, &start, &end, &i);
 	while (start < end)
 	{
-		y = i * (double)game->tex[SP].tex_height / (double)game->s_height;
-		color = game->tex[SP].addr[y * game->tex[SP].tex_width
-			+ (int)(x * (double)game->tex[SP].tex_height
+		y = i * (double)game->sprite[sp].tex.tex_height / (double)game->s_height;
+		color = game->sprite[sp].tex.addr[y * game->sprite[sp].tex.tex_width
+			+ (int)(x * (double)game->sprite[sp].tex.tex_height
 				/ (double)game->s_height)];
-		if (color > 0x000000)
+		if (color > 0x00ff00)
 			if (s_pos + x >= 0 && s_pos + x < game->file.width)
 				if (game->ray.dist_wall[x + s_pos] > game->sprite[sp].dist)
 					game->data.addr[start * game->file.width + x + s_pos]
@@ -59,9 +67,10 @@ void	sprite_param(t_game *game)
 	int	s_pos;
 
 	i = 0;
+	//load_sprite(game);
 	while (i < game->num_sprite)
 	{
-		if ((game->sprite[i].visible == 1)
+		if ((game->sprite[i].visible == 1 && game->sprite[i].action == 1)
 			&& (cos(game->sprite[i].angle - game->player.rotation_angle) > 0))
 		{
 			x = 0;

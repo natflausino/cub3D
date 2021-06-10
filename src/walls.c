@@ -1,32 +1,5 @@
 #include "../includes/cub3d.h"
 
-void	color_floor_ceiling(t_game *game, double wall_height, int i)
-{
-	int		j;
-	int		color;
-	double	start;
-	int		end;
-
-	start = (game->file.height / 2) - (wall_height / 2);
-	end = (game->file.height / 2) + (wall_height / 2);
-	j = 0;
-	while (j < start)
-	{
-		color = game->file.color_ceiling;
-		if (j * game->file.width + i > 0)
-			game->data.addr[j * game->file.width + i] = color;
-		j++;
-	}
-	j = end;
-	while (j < game->file.height)
-	{
-		color = game->file.color_floor;
-		if (j * game->file.width + i > 0)
-			game->data.addr[j * game->file.width + i] = color;
-		j++;
-	}
-}
-
 void	draw_strip(t_game *game, int x, int side, int strip_height)
 {
 	int		color;
@@ -36,8 +9,16 @@ void	draw_strip(t_game *game, int x, int side, int strip_height)
 	int		start;
 
 	i = 0;
-	start = (game->file.height / 2) - (strip_height / 2);
-	game->end = (game->file.height / 2) + (strip_height / 2);
+	//if (game->player.jump == 1)
+	//{
+		//start = (2 * game->file.height / 3) - (strip_height / 2);
+		//game->end = (2 * game->file.height / 3) + (strip_height / 2);
+	//}
+	//else
+	//{
+		start = (game->file.height / 2) - (strip_height / 2);
+		game->end = (game->file.height / 2) + (strip_height / 2);
+	//}
 	calculate_texture(game, &x_tex, side);
 	if ((game->end - start) >= game->file.height)
 	{
@@ -95,17 +76,76 @@ int	check_wall(t_game *game, double new_x, double new_y)
 	y = new_y;
 	dist = (game->block / 8);
 	result = 0;
-	if (is_wall(game, x - dist, y - dist) == '1'
-		|| is_wall(game, x - dist, y - dist) == '2')
+	if (is_wall(game, x - dist, y - dist) >= '1'
+		&& is_wall(game, x - dist, y - dist) <= '2')
 		result = 1;
-	if (is_wall(game, x + dist, y - dist) == '1'
-		|| is_wall(game, x + dist, y - dist) == '2')
+	if (is_wall(game, x + dist, y - dist) >= '1'
+		&& is_wall(game, x + dist, y - dist) <= '2')
 		result = 1;
-	if (is_wall(game, x - dist, y + dist) == '1'
-		|| is_wall(game, x - dist, y + dist) == '2')
+	if (is_wall(game, x - dist, y + dist) >= '1'
+		&& is_wall(game, x - dist, y + dist) <= '2')
 		result = 1;
-	if (is_wall(game, x + dist, y + dist) == '1'
-		|| is_wall(game, x + dist, y + dist) == '2')
+	if (is_wall(game, x + dist, y + dist) >= '1'
+		&& is_wall(game, x + dist, y + dist) <= '2')
 		result = 1;
+	if (is_wall(game, x - dist, y - dist) == '3'
+		|| is_wall(game, x + dist, y - dist) == '3'
+		|| is_wall(game, x - dist, y + dist) == '3'
+		|| is_wall(game, x + dist, y + dist) == '3')
+		game->sprite->damage = 1;
+	if (is_wall(game, x - dist, y - dist) == '4'
+		|| is_wall(game, x + dist, y - dist) == '4'
+		|| is_wall(game, x - dist, y + dist) == '4'
+		|| is_wall(game, x + dist, y + dist) == '4')
+		game->sprite->cure = 1;
+	if (is_wall(game, x - dist, y - dist) == '8'
+		|| is_wall(game, x + dist, y - dist) == '8'
+		|| is_wall(game, x - dist, y + dist) == '8'
+		|| is_wall(game, x + dist, y + dist) == '8')
+		{
+			if (game->open == 1)
+				result = 0;
+			else
+				result = 1;
+		}
 	return (result);
+}
+
+void	color_floor_ceiling(t_game *game, double wall_height, int i)
+{
+	int		j;
+	int		color;
+	double	start;
+	int		end;
+	int		x_tex;
+	int		y_tex;
+
+	//if (game->player.jump == 1)
+	//{
+		//start = (2 * game->file.height / 3) - (wall_height / 2);
+		//end = (2 * game->file.height / 3) + (wall_height / 2);
+	//}
+	//else
+	//{
+		start = (game->file.height / 2) - (wall_height / 2);
+		end = (game->file.height / 2) + (wall_height / 2);
+	//}
+	j = 0;
+	calculate_texture(game, &x_tex, F_TEX);
+	while (j < start)
+	{
+		color = game->file.color_ceiling;
+		if (j * game->file.width + i > 0)
+			game->data.addr[j * game->file.width + i] = color;
+		j++;
+	}
+	j = end;
+	while (j < game->file.height)
+	{
+		y_tex = j * game->tex[F_TEX].tex_height / (double)wall_height;
+		color = game->tex[F_TEX].addr[(int)(x_tex * game->tex[F_TEX].tex_height + y_tex)];
+		if (color > 0x00FF00)
+			game->data.addr[j * game->file.width + i] = color;
+		j++;
+	}
 }

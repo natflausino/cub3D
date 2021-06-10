@@ -7,11 +7,17 @@ void	check_horiz(t_game *game, int *horzhit)
 
 	next_x = game->ray.interc_x;
 	next_y = game->ray.interc_y;
-	while (next_x >= 0 && next_x < (game->block * game->file.max_line)
+	while (next_x >= 0 && next_x < (game->block * game->file.map_col)
 		&& next_y >= 0 && next_y < (game->block * game->file.map_row))
 	{
-		if (is_wall(game, next_x, (next_y - game->ray.face_up)) == '1')
+		if (is_wall(game, next_x, (next_y - game->ray.face_up)) == '1'
+			|| is_wall(game, next_x, (next_y - game->ray.face_up)) == '8'
+			|| is_wall(game, next_x, (next_y - game->ray.face_up)) == '9')
 		{
+			if (is_wall(game, next_x, (next_y - game->ray.face_up)) == '8')
+				game->door = 1;
+			else
+				game->door = 0;
 			*horzhit = 1;
 			game->ray.hit_hx = next_x;
 			game->ray.hit_hy = next_y;
@@ -19,7 +25,8 @@ void	check_horiz(t_game *game, int *horzhit)
 		}
 		else
 		{
-			if (is_wall(game, next_x, next_y - game->ray.face_up) == '2')
+			if (is_wall(game, next_x, next_y - game->ray.face_up) >= '2'
+				&& is_wall(game, next_x, next_y - game->ray.face_up) <= '4')
 				sprite_visible(game, next_x, next_y - game->ray.face_up);
 			next_x += game->ray.x_step;
 			next_y += game->ray.y_step;
@@ -52,11 +59,17 @@ void	check_vert(t_game *game, int *verthit)
 
 	next_x = game->ray.interc_x;
 	next_y = game->ray.interc_y;
-	while (next_x >= 0 && next_x < (game->block * game->file.max_line)
+	while (next_x >= 0 && next_x < (game->block * game->file.map_col)
 		&& next_y >= 0 && next_y < (game->block * game->file.map_row))
 	{
-		if (is_wall(game, (next_x - game->ray.face_le), next_y) == '1')
+		if (is_wall(game, (next_x - game->ray.face_le), next_y) == '1'
+			|| is_wall(game, (next_x - game->ray.face_le), next_y) == '8'
+			|| is_wall(game, (next_x - game->ray.face_le), next_y) == '9')
 		{
+			if (is_wall(game, (next_x - game->ray.face_le), next_y) == '8')
+				game->door = 1;
+			else
+				game->door = 0;
 			*verthit = 1;
 			game->ray.hit_vx = next_x;
 			game->ray.hit_vy = next_y;
@@ -64,7 +77,8 @@ void	check_vert(t_game *game, int *verthit)
 		}
 		else
 		{
-			if (is_wall(game, next_x - game->ray.face_le, next_y) == '2')
+			if (is_wall(game, next_x - game->ray.face_le, next_y) >= '2'
+				&& is_wall(game, next_x - game->ray.face_le, next_y) <= '4')
 				sprite_visible(game, next_x - game->ray.face_le, next_y);
 			next_x += game->ray.x_step;
 			next_y += game->ray.y_step;
@@ -87,4 +101,9 @@ void	vert_cast(t_game *game, int *verthit)
 		|| (game->ray.face_dw && game->ray.y_step < 0))
 		game->ray.y_step *= -1;
 	check_vert(game, verthit);
+}
+
+double	dist2points(double x1, double y1, double x2, double y2)
+{
+	return (sqrt((x2 -x1) * (x2 - x1) + (y2 - y1) * (y2 - y1)));
 }

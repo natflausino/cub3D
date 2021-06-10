@@ -2,23 +2,28 @@
 
 char	*ft_strchr(const char *s, int c)
 {
-	char	*c_in_s;
+	int					i;
+	char				*tmp;
 
-	if (c > 127)
-		c %= 256;
-	while (*s != '\0')
+	i = 0;
+	tmp = (char *)s;
+	if (!s)
+		return (NULL);
+	if (c == '\0')
 	{
-		if (*s == c)
-		{
-			c_in_s = (char *)s;
-			return (c_in_s);
-		}
-		s++;
+		while (*tmp)
+			tmp++;
+		return ((char *) tmp);
 	}
-	if (*s == c)
+	while (tmp[i] != '\0')
 	{
-		c_in_s = (char *)s;
-		return (c_in_s);
+		if (tmp[i] == (char)c)
+			return ((char *)&tmp[i]);
+		i++;
+	}
+	if (*tmp == '\0' && c == '\0')
+	{
+		return (tmp);
 	}
 	return (NULL);
 }

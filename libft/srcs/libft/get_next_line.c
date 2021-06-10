@@ -1,68 +1,91 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sbertali <sbertali@student.42sp.org.br>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/02/25 18:11:39 by sbertali          #+#    #+#             */
-/*   Updated: 2021/05/07 19:38:10 by sbertali         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libft.h"
-#include <fcntl.h>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <sys/resource.h>
-#include <ctype.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <limits.h>
 
-static int	outputs(int n, char **buff, char **line)
+static int	check_errors(int fd, char **line, t_gnl *string)
 {
-	char	*temp;
-
-	if (n < 0)
-		return (-1);
-	*line = ft_substr(*buff, 0, ft_strclen(*buff, '\n'));
-	if (!line)
-		return (-1);
-	if (ft_strchr(*buff, '\n'))
-	{
-		temp = ft_strdup(ft_strchr(*buff, '\n') + 1);
-		ft_strdel(&*buff);
-		*buff = temp;
+	*line = ft_strdup("");
+	if (*line == NULL)
 		return (1);
-	}
-	ft_strdel(&*buff);
+	ft_memset(string, 0, sizeof(*string));
+	if ((fd < 0) || (fd > RLIMIT_NOFILE) || (BUFFER_SIZE < 1) || !(line))
+		return (1);
 	return (0);
+}
+
+static int	add_to_line(t_gnl *string, char **line, char **excess, int new_line)
+{
+	if (new_line)
+		*string->break_line_ptr = '\0';
+	string->read[string->read_return] = '\0';
+	string->temp = ft_strjoin(*line, string->read);
+	if (string->temp == NULL)
+		return (-1);
+	free(*line);
+	*line = string->temp;
+	if (new_line)
+	{
+		string->temp = ft_strdup(string->break_line_ptr + 1);
+		if (string->temp == NULL)
+			return (-1);
+		free(*excess);
+		*excess = string->temp;
+	}
+	return (READ_LINE);
+}
+
+static int	add_excess(char **line, t_gnl *string, char **excess, int new_line)
+{
+	if (new_line)
+		*string->break_line_ptr = '\0';
+	string->temp = ft_strjoin(*line, *excess);
+	if (string->temp == NULL)
+		return (-1);
+	free(*line);
+	*line = string->temp;
+	if (new_line)
+	{
+		string->temp = ft_strdup(string->break_line_ptr + 1);
+		if (string->temp == NULL)
+			return (-1);
+	}
+	free(*excess);
+	if (new_line)
+		*excess = string->temp;
+	else
+		*excess = NULL;
+	return (READ_LINE);
+}
+
+static int	free_excess(t_gnl *string, char **excess)
+{
+	free(*excess);
+	return (string->read_return);
 }
 
 int	get_next_line(int fd, char **line)
 {
-	static char	*buff_line[_SC_OPEN_MAX];
-	char		*new_line;
-	int			nbytes;
+	static char		*excess;
+	t_gnl			string;
 
-	if (BUFFER_SIZE <= 0 || fd < 0 || fd > RLIMIT_NOFILE || !line)
+	if (check_errors(fd, line, &string))
 		return (-1);
-	if (!(buff_line[fd]))
-		buff_line[fd] = ft_strdup("");
-	if (!buff_line[fd])
-		return (-1);
-	new_line = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!new_line)
-		return (-1);
-	nbytes = read(fd, new_line, BUFFER_SIZE);
-	while (nbytes > 0)
+	if (excess != NULL)
 	{
-		new_line[nbytes] = '\0';
-		buff_line[fd] = ft_strjoin_free(buff_line[fd], new_line);
-		if (ft_strchr(buff_line[fd], '\n'))
-			break ;
+		string.break_line_ptr = ft_strchr(excess, '\n');
+		if ((string.break_line_ptr))
+			return (add_excess(line, &string, &excess, NEW_LINE));
+		if ((add_excess(line, &string, &excess, NO_NEW_LINE)) == -1)
+			return (-1);
 	}
-	ft_strdel(&new_line);
-	return (outputs(nbytes, &buff_line[fd], line));
+	string.read_return = read(fd, string.read, BUFFER_SIZE);
+	string.break_line_ptr = ft_strchr(string.read, '\n');
+	while (((string.read_return > 0) && !(string.break_line_ptr)))
+	{
+		if (add_to_line(&string, line, &excess, NO_NEW_LINE) == -1)
+			return (-1);
+		string.read_return = read(fd, string.read, BUFFER_SIZE);
+		string.break_line_ptr = ft_strchr(string.read, '\n');
+	}
+	if (string.read_return < 1)
+		return (free_excess(&string, &excess));
+	return (add_to_line(&string, line, &excess, NEW_LINE));
 }

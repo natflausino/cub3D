@@ -3,16 +3,17 @@
 void	sort_sprite(t_game *game)
 {
 	int			i;
-	int			j;
-	double		temp;
+	t_sprite	temp;
 
-	i = -1;
+	i = 0;
 	while (++i < game->num_sprite - 1)
 	{
-		j = i;
-		if (game->sprite[i].dist < game->sprite[j + 1].dist)
+		if (game->sprite[i].dist < game->sprite[i + 1].dist)
 		{
-			temp = game->sprite[i].dist;
+			temp = game->sprite[i];
+			game->sprite[i] = game->sprite[i + 1];
+			game->sprite[i + 1] = temp;
+			/*temp = game->sprite[i].dist;
 			game->sprite[i].dist = game->sprite[j + 1].dist;
 			game->sprite[j + 1].dist = temp;
 			temp = game->sprite[i].visible;
@@ -24,8 +25,9 @@ void	sort_sprite(t_game *game)
 			temp = game->sprite[i].pos.y;
 			game->sprite[i].pos.y = game->sprite[j + 1].pos.y;
 			game->sprite[j + 1].pos.y = temp;
-			i = -1;
+			i = -1;*/
 		}
+		i++;
 	}
 }
 
@@ -45,11 +47,26 @@ void	sprite_visible(t_game *game, int x, int y)
 	i = 0;
 	while (i < game->num_sprite)
 	{
+
+		/*if(game->sprite->damage == 1
+		&& game->sprite[i].action == 1
+		&& game->sprite[i].visible == 1)
+		{
+			game->life--;
+			game->sprite->damage = 0;
+			game->sprite[i].action = 0;
+			game->sprite[i].visible = 0;
+			printf("%i\n", game->life);
+		}*/
+
 		dist_x = x / game->block;
 		dist_y = y / game->block;
 		if ((dist_x == (int)game->sprite[i].pos.x / game->block)
 			&& (dist_y == (int)game->sprite[i].pos.y / game->block))
-			game->sprite[i].visible = 1;
+			{
+				game->sprite[i].action = 1;
+				game->sprite[i].visible = 1;
+			}
 		i++;
 	}
 }
@@ -65,16 +82,45 @@ void	find_sprite(t_game *game)
 	while (i < game->file.map_row)
 	{
 		j = 0;
-		while (j < game->file.max_line)
+		while (j < game->file.map_col)
 		{
-			if (game->file.tab[i][j] == '2')
+			if (game->file.tab[i][j] >= '2' && game->file.tab[i][j] <= '4')
 			{
+				game->sprite[k].index = game->file.tab[i][j] - '0';
 				game->sprite[k].pos.x = (j * game->block) + (game->block / 2);
 				game->sprite[k].pos.y = (i * game->block) + (game->block / 2);
 				game->sprite[k].dist = dist2points(game->sprite[k].pos.x,
 						game->sprite[k].pos.y, game->player.x, game->player.y);
 				game->sprite[k].visible = 0;
 				k++;
+			}
+			if (game->file.tab[i][j] == '3' && game->sprite->damage == 1)
+			{
+				game->life--;
+				game->sprite->damage = 0;
+				game->file.tab[i][j] = '0';
+				game->num_sprite--;
+				if (game->life == 0)
+					close_window(game);
+				printf("%d\n", game->life);
+			}
+			if (game->file.tab[i][j] == '4' && game->sprite->cure == 1)
+			{
+				game->life++;
+				game->sprite->cure = 0;
+				game->file.tab[i][j] = '0';
+				game->num_sprite--;
+				printf("%d\n", game->life);
+			}
+			if (game->file.tab[i][j] == '8' && game->open == 1)
+			{
+				game->file.tab[i][j] = '7';
+				game->close = 0;
+			}
+			if (game->file.tab[i][j] == '7' && game->close == 1)
+			{
+				game->file.tab[i][j] = '8';
+				game->open = 0;
 			}
 			j++;
 		}
@@ -93,15 +139,15 @@ void	num_sprites(t_game *game)
 	while (i < game->file.map_row)
 	{
 		j = 0;
-		while (j < game->file.max_line)
+		while (j < game->file.map_col)
 		{
-			if (game->file.tab[i][j] == '2')
+			if (game->file.tab[i][j] >= '2'
+				&& game->file.tab[i][j] <= '4')
 				s_count++;
 			j++;
 		}
 		i++;
 	}
-	//if (s_count == 0)
-	//	return_error(-22);
 	game->num_sprite = s_count;
+	printf("%i/n", game->num_sprite);
 }

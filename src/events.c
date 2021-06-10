@@ -2,10 +2,8 @@
 
 int	close_window(t_game *game)
 {
-	//t_bmp bmp;
-
 	free(game->ray.dist_wall);
-	free(game->sprite);
+	free_sprites(game);
 	mlx_destroy_window(game->data.mlx, game->data.win);
 	mlx_destroy_image(game->data.mlx, game->data.img);
 	mlx_destroy_display(game->data.mlx);
@@ -32,6 +30,20 @@ int	press_key(int key, t_game *game)
 		game->player.turn_direction = +1;
 	if (key == LEFT)
 		game->player.turn_direction = -1;
+	// if (key == UP)
+	// {
+	// 	game->player.jump = 1;
+	// 	game->player.left_right = 0;
+	// 	game->player.walk_direction = 0;
+	// 	game->player.turn_direction = 0;
+	// }
+	if (key == ALT)
+	{
+		game->player.walk_speed = 10;
+		game->player.turn_speed = 3 * (PI / 180);
+	}
+	if (key == SHIFT)
+		game->open = 1;
 	return (0);
 }
 
@@ -49,5 +61,29 @@ int	release_key(int key, t_game *game)
 		game->player.turn_direction = 0;
 	if (key == LEFT)
 		game->player.turn_direction = 0;
+	// if (key == UP)
+	// 	game->player.jump = 0;
+	if (key == ALT)
+	{
+		game->player.walk_speed = 5;
+		game->player.turn_speed = 1.3 * (PI / 180);
+	}
+	if (key == SHIFT)
+		game->close = 1;
 	return (0);
+}
+
+void	table_free(char **tab)
+{
+	int	i;
+	int	count;
+
+	count = ft_strlen_ptr(tab);
+	i = 0;
+	while (i < count)
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }

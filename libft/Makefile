@@ -10,6 +10,7 @@ SRCS		= $(foreach dir, $(SRCS_DIRS), $(FILES))
 OBJS		= $(subst $(DIR_SRCS), $(DIR_OBJS), $(SRCS:.c=.o))
 
 FILES = $(dir)/ft_atoi.c\
+		$(dir)/ft_itoa.c\
 		$(dir)/ft_bzero.c\
 		$(dir)/ft_memcpy.c\
 		$(dir)/ft_memset.c\
@@ -31,7 +32,10 @@ FILES = $(dir)/ft_atoi.c\
 		$(dir)/get_next_line.c\
 		$(dir)/ft_putendl.c\
 		$(dir)/ft_putchar.c\
-		$(dir)/ft_putstr.c
+		$(dir)/ft_putstr.c\
+		$(dir)/ft_calloc.c\
+		$(dir)/ft_strsub.c
+
 
 INCLUDES	= -I includes
 
