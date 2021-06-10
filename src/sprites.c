@@ -20,23 +20,15 @@ void	draw_sprite(t_game *game, int x, int s_pos, int sp)
 
 	i = 0;
 	y = 0;
-	//if (game->player.jump == 1)
-	//{
-	//	start = 2 * game->file.height / 3 - game->s_height / 2;
-	//	end = 2 * game->file.height / 3 + game->s_height / 2;
-	//}
-	//else
-	//{
-		start = game->file.height / 2 - game->s_height / 2;
-		end = game->file.height / 2 + game->s_height / 2;
-	//}
+	start = game->file.height / 2 - game->s_hei / 2;
+	end = game->file.height / 2 + game->s_hei / 2;
 	sprite_height(game, &start, &end, &i);
 	while (start < end)
 	{
-		y = i * (double)game->sprite[sp].tex.tex_height / (double)game->s_height;
+		y = i * (double)game->sprite[sp].tex.tex_height / (double)game->s_hei;
 		color = game->sprite[sp].tex.addr[y * game->sprite[sp].tex.tex_width
 			+ (int)(x * (double)game->sprite[sp].tex.tex_height
-				/ (double)game->s_height)];
+				/ (double)game->s_hei)];
 		if (color > 0x00ff00)
 			if (s_pos + x >= 0 && s_pos + x < game->file.width)
 				if (game->ray.dist_wall[x + s_pos] > game->sprite[sp].dist)
@@ -53,11 +45,12 @@ void	set_sprite(t_game *game, int i, int *s_pos)
 
 	game->sprite[i].dist = game->sprite[i].dist * cos(game->sprite[i].angle
 			- game->player.rotation_angle) + (game->block / 4);
-	game->s_height = (game->block / game->sprite[i].dist) * game->dist2player;
-	height = game->s_height;
+	game->s_hei = (game->block / game->sprite[i].dist) * game->dist2player;
+	height = game->s_hei;
 	*s_pos = (tan(game->fov / 2) * game->dist2player)
 		+ (tan(game->sprite[i].angle - game->player.rotation_angle)
 			* game->dist2player) - (height / 2);
+	load_sprite(game);
 }
 
 void	sprite_param(t_game *game)
@@ -67,7 +60,6 @@ void	sprite_param(t_game *game)
 	int	s_pos;
 
 	i = 0;
-	//load_sprite(game);
 	while (i < game->num_sprite)
 	{
 		if ((game->sprite[i].visible == 1 && game->sprite[i].action == 1)
@@ -75,7 +67,7 @@ void	sprite_param(t_game *game)
 		{
 			x = 0;
 			set_sprite(game, i, &s_pos);
-			while ((x < game->s_height) && (x + s_pos < game->file.width))
+			while ((x < game->s_hei) && (x + s_pos < game->file.width))
 			{
 				if (x + s_pos >= 0)
 					draw_sprite(game, x, s_pos, i);

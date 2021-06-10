@@ -96,9 +96,5 @@ void	cast_all_rays(t_game *game)
 		render_projection_walls(game, i);
 		i++;
 	}
-	load_sprite(game);
 	render_sprite(game);
-	//minimap(game);
-	// minimap_player(game);
-	// minimap_rays(game);
 }

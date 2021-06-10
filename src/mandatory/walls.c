@@ -43,7 +43,6 @@ void	render_projection_walls(t_game *game, int i)
 	texture_select(game);
 	texture_ident(game);
 	draw_strip(game, i, game->ident, round(wall_height));
-	//minimap(game);
 }
 
 int	is_wall(t_game *game, int x, int y)

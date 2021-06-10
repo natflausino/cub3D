@@ -13,6 +13,7 @@ typedef struct s_file
 	char	*ea_path;
 	char	*d_path;
 	char	*f_path;
+	char	*s_path;
 	int		color_floor;
 	int		color_ceiling;
 	int		map_col;
@@ -61,7 +62,6 @@ typedef struct s_player
 	double	rotation_angle;
 	double	walk_speed;
 	double	turn_speed;
-	int		jump;
 }				t_player;
 
 typedef struct s_ray
@@ -160,7 +160,7 @@ typedef struct s_game
 	int			total_sprites;
 	double		dist2player;
 	int			end;
-	int			s_height;
+	int			s_hei;
 	int			floor_bool;
 	int			celling_bool;
 	int			life;

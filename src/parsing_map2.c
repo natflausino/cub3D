@@ -11,8 +11,9 @@ void	inside_map(char **tab)
 		j = 0;
 		while (tab[i][j])
 		{
-			if ((tab[i][j] < '0' && tab[i][j] > '5') && tab[i][j] != ' ' && tab[i][j] != 'N' &&
-			tab[i][j] != 'S' && tab[i][j] != 'W' && tab[i][j] != 'E')
+			if ((tab[i][j] < '0' && tab[i][j] > '5') && tab[i][j] != ' '
+				&& tab[i][j] != 'N' && tab[i][j] != 'S' && tab[i][j] != 'W'
+				&& tab[i][j] != 'E')
 				return_free_error(-18, tab);
 			j++;
 		}

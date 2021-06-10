@@ -71,7 +71,8 @@ void	texture_load(t_game *game)
 			game->file.f_path, &game->tex[F_TEX].tex_width,
 			&game->tex[F_TEX].tex_height);
 	game->tex[F_TEX].addr = (int *)mlx_get_data_addr(game->tex[F_TEX].img,
-			&game->tex[F_TEX].bpp, &game->tex[F_TEX].l_len, &game->tex[F_TEX].endian);
+			&game->tex[F_TEX].bpp, &game->tex[F_TEX].l_len,
+			&game->tex[F_TEX].endian);
 }
 
 void	calculate_texture(t_game *game, int *x_tex, int side)

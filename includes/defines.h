@@ -37,5 +37,4 @@
 # define PI 3.14159265
 # define TWO_PI 6.28316530
 
-# define MAP_SCALE 1
 #endif

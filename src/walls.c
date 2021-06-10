@@ -9,16 +9,8 @@ void	draw_strip(t_game *game, int x, int side, int strip_height)
 	int		start;
 
 	i = 0;
-	//if (game->player.jump == 1)
-	//{
-		//start = (2 * game->file.height / 3) - (strip_height / 2);
-		//game->end = (2 * game->file.height / 3) + (strip_height / 2);
-	//}
-	//else
-	//{
-		start = (game->file.height / 2) - (strip_height / 2);
-		game->end = (game->file.height / 2) + (strip_height / 2);
-	//}
+	start = (game->file.height / 2) - (strip_height / 2);
+	game->end = (game->file.height / 2) + (strip_height / 2);
 	calculate_texture(game, &x_tex, side);
 	if ((game->end - start) >= game->file.height)
 	{
@@ -31,6 +23,8 @@ void	draw_strip(t_game *game, int x, int side, int strip_height)
 	{
 		y_tex = i * game->tex[side].tex_height / (double)strip_height;
 		color = game->tex[WALL].addr[y_tex * game->tex[side].tex_width + x_tex];
+		if (game->life <= 1)
+			color = 0xFFFFFF;
 		game->data.addr[start * game->file.width + x] = color;
 		i++;
 		start++;
@@ -102,12 +96,12 @@ int	check_wall(t_game *game, double new_x, double new_y)
 		|| is_wall(game, x + dist, y - dist) == '8'
 		|| is_wall(game, x - dist, y + dist) == '8'
 		|| is_wall(game, x + dist, y + dist) == '8')
-		{
-			if (game->open == 1)
-				result = 0;
-			else
-				result = 1;
-		}
+	{
+		if (game->open == 1)
+			result = 0;
+		else
+			result = 1;
+	}
 	return (result);
 }
 
@@ -117,33 +111,37 @@ void	color_floor_ceiling(t_game *game, double wall_height, int i)
 	int		color;
 	double	start;
 	int		end;
-	int		x_tex;
-	int		y_tex;
 
-	//if (game->player.jump == 1)
-	//{
-		//start = (2 * game->file.height / 3) - (wall_height / 2);
-		//end = (2 * game->file.height / 3) + (wall_height / 2);
-	//}
-	//else
-	//{
-		start = (game->file.height / 2) - (wall_height / 2);
-		end = (game->file.height / 2) + (wall_height / 2);
-	//}
+	start = (game->file.height / 2) - (wall_height / 2);
+	end = (game->file.height / 2) + (wall_height / 2);
 	j = 0;
-	calculate_texture(game, &x_tex, F_TEX);
 	while (j < start)
 	{
 		color = game->file.color_ceiling;
+		if (game->life <= 1)
+			color = 0xFFFFFF;
 		if (j * game->file.width + i > 0)
 			game->data.addr[j * game->file.width + i] = color;
 		j++;
 	}
 	j = end;
+	floor_texture(game, i, j, wall_height);
+}
+
+void	floor_texture(t_game *game, int i, int j, double wall_height)
+{
+	int		x_tex;
+	int		y_tex;
+	int		color;
+
+	calculate_texture(game, &x_tex, F_TEX);
 	while (j < game->file.height)
 	{
 		y_tex = j * game->tex[F_TEX].tex_height / (double)wall_height;
-		color = game->tex[F_TEX].addr[(int)(x_tex * game->tex[F_TEX].tex_height + y_tex)];
+		color = game->tex[F_TEX].addr[(int)(x_tex
+				* game->tex[F_TEX].tex_height + y_tex)];
+		if (game->life <= 1)
+			color = 0xFFFFFF;
 		if (color > 0x00FF00)
 			game->data.addr[j * game->file.width + i] = color;
 		j++;

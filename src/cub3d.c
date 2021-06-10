@@ -7,7 +7,7 @@ void	check_paths(t_game *game)
 		return_error(-17);
 	}
 	if (!game->file.so_path || !game->file.d_path || !game->file.we_path
-		|| !game->file.no_path || !game->file.ea_path)
+		|| !game->file.no_path || !game->file.ea_path || !game->file.f_path)
 	{
 		free_textures(game);
 		return_error(-21);
@@ -65,32 +65,19 @@ void	set_param(t_game *game)
 {
 	game->fov = PI / 3;
 	game->block = 64;
-	game->file.player_found = 0;
 	game->ray.dist_wall = (int *)ft_calloc(1, sizeof(int) * game->file.width);
 	num_sprites(game);
 	game->total_sprites = game->num_sprite;
 	game->sprite = (t_sprite *)ft_calloc(game->num_sprite, sizeof(t_sprite));
-	//load_sprite(game);
 	game->tex = ft_calloc(8, sizeof(t_tex));
 	texture_load(game);
 	player_position(game);
 	player_facing(game);
 	game->dist2player = (game->file.width / 2) / tan(game->fov / 2);
 	game->life = 3;
-	game->sprite->damage = 0;
-	game->sprite->cure = 0;
 	game->player.radius = 5;
-	game->player.turn_direction = 0;
-	game->player.walk_direction = 0;
-	game->player.left_right = 0;
 	game->player.walk_speed = 5;
 	game->player.turn_speed = 1.3 * (PI / 180);
-	game->floor_bool = 0;
-	game->celling_bool = 0;
-	game->open = 0;
-	game->close = 0;
-	game->door = 0;
-	game->player.jump = 0;
 }
 
 int	main(int argc, char **argv)

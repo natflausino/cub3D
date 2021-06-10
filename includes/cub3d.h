@@ -158,6 +158,7 @@ void	render_projection_walls(t_game *game, int i);
 int		is_wall(t_game *game, int x, int y);
 int		check_wall(t_game *game, double new_x, double new_y);
 void	color_floor_ceiling(t_game *game, double wall_height, int i);
+void	floor_texture(t_game *game, int i, int j, double wall_height);
 
 /******************************************************************************
 **	BONUS
@@ -167,8 +168,8 @@ void	color_floor_ceiling(t_game *game, double wall_height, int i);
 **	BONUS
 ******************************************************************************/
 
-void	image_pixel_put(t_game *game, int x, int y);
-void	draw_rect(t_game *game);
+void	image_put_pixel(t_game *game, int x, int y, int color);
+void	draw_rect(t_game *game, int color);
 void	minimap(t_game *game);
 void	minimap_player(t_game *game);
 void	minimap_rays(t_game * game);

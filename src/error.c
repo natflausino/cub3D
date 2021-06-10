@@ -35,7 +35,7 @@ void	print_error_2(int err)
 	if (err == -21)
 		ft_putendl("Error\nTexture path not found.\n");
 	if (err == -22)
-		ft_putendl("Error\nSprite path not found.\n");
+		ft_putendl("Error\nSprite texture not found.\n");
 	if (err == -23)
 		ft_putendl("Error\nExpected a <file>.xpm.\n");
 	if (err == -24)

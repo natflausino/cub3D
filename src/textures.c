@@ -41,17 +41,41 @@ void	texture_ident(t_game *game)
 void	free_textures(t_game *game)
 {
 	if (game->file.no_path)
+	{
+		mlx_destroy_image(game->data.mlx, game->tex[N_TEX].img);
 		free(game->file.no_path);
+		game->file.no_path = NULL;
+	}
 	if (game->file.so_path)
+	{
+		mlx_destroy_image(game->data.mlx, game->tex[S_TEX].img);
 		free(game->file.so_path);
+		game->file.so_path = NULL;
+	}
 	if (game->file.ea_path)
+	{
+		mlx_destroy_image(game->data.mlx, game->tex[E_TEX].img);
 		free(game->file.ea_path);
+		game->file.ea_path = NULL;
+	}
 	if (game->file.we_path)
+	{
+		mlx_destroy_image(game->data.mlx, game->tex[W_TEX].img);
 		free(game->file.we_path);
+		game->file.we_path = NULL;
+	}
 	if (game->file.d_path)
+	{
+		mlx_destroy_image(game->data.mlx, game->tex[D_TEX].img);
 		free(game->file.d_path);
+		game->file.d_path = NULL;
+	}
 	if (game->file.f_path)
+	{
+		mlx_destroy_image(game->data.mlx, game->tex[F_TEX].img);
 		free(game->file.f_path);
+		game->file.f_path = NULL;
+	}
 }
 
 void	texture_load(t_game *game)
@@ -72,7 +96,8 @@ void	texture_load(t_game *game)
 			game->file.f_path, &game->tex[F_TEX].tex_width,
 			&game->tex[F_TEX].tex_height);
 	game->tex[F_TEX].addr = (int *)mlx_get_data_addr(game->tex[F_TEX].img,
-			&game->tex[F_TEX].bpp, &game->tex[F_TEX].l_len, &game->tex[F_TEX].endian);
+			&game->tex[F_TEX].bpp, &game->tex[F_TEX].l_len,
+			&game->tex[F_TEX].endian);
 	game->tex[D_TEX].img = mlx_xpm_file_to_image(game->data.mlx,
 			game->file.d_path, &game->tex[D_TEX].tex_width,
 			&game->tex[D_TEX].tex_height);

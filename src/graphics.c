@@ -3,9 +3,11 @@
 void	draw(t_game *game)
 {
 	cast_all_rays(game);
-	//load_sprite(game);
-	minimap(game);
-	minimap_player(game);
+	if (game->life > 1)
+	{
+		minimap(game);
+		minimap_player(game);
+	}
 	if (game->init == 1)
 	{
 		image_create(game);
@@ -30,7 +32,7 @@ void	screen_resolution(t_game *game)
 int	update(t_game *game)
 {
 	if (game->player.walk_direction || game->player.turn_direction
-		|| game->player.left_right || game->player.jump <= 1)
+		|| game->player.left_right)
 		move_player(game);
 	if (game->init == 0)
 		mlx_put_image_to_window(game->data.mlx, game->data.win,
