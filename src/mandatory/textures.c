@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/mandatory/cub3d.h"
 
 void	texture_select(t_game *game)
 {
@@ -44,8 +44,6 @@ void	free_textures(t_game *game)
 		free(game->file.we_path);
 	if (game->file.s_path)
 		free(game->file.s_path);
-	if (game->file.f_path)
-		free(game->file.f_path);
 }
 
 void	texture_load(t_game *game)
@@ -67,12 +65,6 @@ void	texture_load(t_game *game)
 			&game->tex[SP].tex_height);
 	game->tex[SP].addr = (int *)mlx_get_data_addr(game->tex[SP].img,
 			&game->tex[SP].bpp, &game->tex[SP].l_len, &game->tex[SP].endian);
-	game->tex[F_TEX].img = mlx_xpm_file_to_image(game->data.mlx,
-			game->file.f_path, &game->tex[F_TEX].tex_width,
-			&game->tex[F_TEX].tex_height);
-	game->tex[F_TEX].addr = (int *)mlx_get_data_addr(game->tex[F_TEX].img,
-			&game->tex[F_TEX].bpp, &game->tex[F_TEX].l_len,
-			&game->tex[F_TEX].endian);
 }
 
 void	calculate_texture(t_game *game, int *x_tex, int side)

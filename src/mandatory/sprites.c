@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/mandatory/cub3d.h"
 
 void	sprite_height(t_game *game, int *start, int *end, int *i)
 {

@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/mandatory/cub3d.h"
 
 void	check_paths(t_game *game)
 {
@@ -78,7 +78,7 @@ void	set_param(t_game *game)
 	game->player.turn_direction = 0;
 	game->player.walk_direction = 0;
 	game->player.left_right = 0;
-	game->player.walk_speed = 5;
+	game->player.walk_speed = 2;
 	game->player.turn_speed = 1.3 * (PI / 180);
 	game->floor_bool = 0;
 	game->celling_bool = 0;

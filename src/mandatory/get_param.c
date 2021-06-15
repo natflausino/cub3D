@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/mandatory/cub3d.h"
 
 int	check_digit(char *tab, char *set)
 {

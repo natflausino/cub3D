@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/mandatory/cub3d.h"
 
 void	draw_strip(t_game *game, int x, int side, int strip_height)
 {

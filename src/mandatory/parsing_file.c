@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/mandatory/cub3d.h"
 
 char	*full_line(t_game *game, char *line)
 {
@@ -83,7 +83,6 @@ void	reset_path(t_game *game)
 	game->file.we_path = NULL;
 	game->file.so_path = NULL;
 	game->file.s_path = NULL;
-	game->file.f_path = NULL;
 }
 
 int	find_map(char *line)

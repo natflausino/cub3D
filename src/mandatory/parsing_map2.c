@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/mandatory/cub3d.h"
 
 void	inside_map(char **tab)
 {
@@ -41,10 +41,10 @@ void	is_map_closed(t_game *game, char **tab)
 
 void	check_f_c(t_game *game, char *line)
 {
-	if (line[0] == 'F' && game->floor_bool == 0 && game->file.f_path == 0)
+	if (line[0] == 'F' && game->floor_bool == 0)
 	{
 		game->floor_bool = 1;
-		get_texture(line + 1, &game->file.f_path);
+		game->file.color_floor = (int)get_color(line + 1);
 	}
 	else if (line[0] == 'C' && game->celling_bool == 0)
 	{

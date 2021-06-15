@@ -1,4 +1,4 @@
-#include "../includes/cub3d.h"
+#include "../../includes/mandatory/cub3d.h"
 
 void	dist2wall(t_game *game, double horz_dist, double vert_dist)
 {
