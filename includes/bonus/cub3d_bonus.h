@@ -197,4 +197,7 @@ void	find_sprite_4(t_game *game, int i, int j);
 void	win(t_game *game, int x, int y, int dist);
 void	effect(t_game *game, int x, int y, int dist);
 
+void	find_sprite_init(t_game *game);
+void	find_sprite_2_init(t_game *game, int i, int j, int *k);
+
 #endif

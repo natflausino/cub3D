@@ -70,12 +70,13 @@ void	set_param(t_game *game)
 	game->total_sprites = game->num_sprite;
 	game->sprite = (t_sprite *)ft_calloc(game->num_sprite, sizeof(t_sprite));
 	game->tex = ft_calloc(8, sizeof(t_tex));
+	find_sprite_init(game);
+	load_sprite(game);
 	texture_load(game);
 	player_position(game);
 	player_facing(game);
 	game->dist2player = (game->file.width / 2) / tan(game->fov / 2);
 	game->life = 3;
-	game->player.radius = 5;
 	game->player.walk_speed = 2;
 	game->player.turn_speed = 1.3 * (PI / 180);
 }

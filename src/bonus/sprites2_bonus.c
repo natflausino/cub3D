@@ -62,17 +62,14 @@ void	find_sprite(t_game *game)
 				find_sprite_3_aux(game, i, j);
 			if (game->file.tab[i][j] == '7' && game->close == 1)
 				find_sprite_3_aux1(game, i, j);
-			if (game->file.tab[i][j] == '5' && game->sprite->win == 1)
-				find_sprite_4(game, i, j);
+			//if (game->file.tab[i][j] == '5' && game->sprite->win == 1)
+			//	find_sprite_4(game, i, j);
 		}
 	}
 }
 
 void	find_sprite_2(t_game *game, int i, int j, int *k)
 {
-	game->sprite[*k].index = game->file.tab[i][j] - '0';
-	game->sprite[*k].pos.x = (j * game->block) + (game->block / 2);
-	game->sprite[*k].pos.y = (i * game->block) + (game->block / 2);
 	game->sprite[*k].dist = dist2points(game->sprite[*k].pos.x,
 			game->sprite[*k].pos.y, game->player.x, game->player.y);
 	game->sprite[*k].visible = 0;

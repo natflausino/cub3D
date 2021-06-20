@@ -29,7 +29,7 @@ void	draw_sprite(t_game *game, int x, int s_pos, int sp)
 		color = game->sprite[sp].tex.addr[y * game->sprite[sp].tex.tex_width
 			+ (int)(x * (double)game->sprite[sp].tex.tex_height
 				/ (double)game->s_hei)];
-		if (color > 0x00ff00)
+		if (color != 0x00ff00) //Trocar a cor (0x) para poder usar transparencia na imagem!!!
 			if (s_pos + x >= 0 && s_pos + x < game->file.width)
 				if (game->ray.dist_wall[x + s_pos] > game->sprite[sp].dist)
 					game->data.addr[start * game->file.width + x + s_pos]
@@ -50,7 +50,6 @@ void	set_sprite(t_game *game, int i, int *s_pos)
 	*s_pos = (tan(game->fov / 2) * game->dist2player)
 		+ (tan(game->sprite[i].angle - game->player.rotation_angle)
 			* game->dist2player) - (height / 2);
-	load_sprite(game);
 }
 
 void	sprite_param(t_game *game)

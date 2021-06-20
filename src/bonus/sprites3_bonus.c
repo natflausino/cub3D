@@ -82,7 +82,7 @@ void	num_sprites(t_game *game)
 		while (j < game->file.map_col)
 		{
 			if (game->file.tab[i][j] >= '2'
-				&& game->file.tab[i][j] <= '4')
+				&& game->file.tab[i][j] <= '6')
 				s_count++;
 			j++;
 		}

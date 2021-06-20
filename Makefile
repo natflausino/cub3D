@@ -71,6 +71,7 @@ BONUS_FILES = $(SRC_BONUS)bitmap_bonus.c\
 			$(SRC_BONUS)raycasting2_bonus.c\
 			$(SRC_BONUS)raycasting3_bonus.c\
 			$(SRC_BONUS)sprites_bonus.c\
+			$(SRC_BONUS)sprites_init_bonus.c\
 			$(SRC_BONUS)sprites_utils_bonus.c\
 			$(SRC_BONUS)sprites2_bonus.c\
 			$(SRC_BONUS)sprites3_bonus.c\
@@ -97,6 +98,7 @@ BONUS_OBJECTS = bitmap_bonus.o\
 			raycasting2_bonus.o\
 			raycasting3_bonus.o\
 			sprites_bonus.o\
+			sprites_init_bonus.o\
 			sprites_utils_bonus.o\
 			sprites2_bonus.o\
 			sprites3_bonus.o\
@@ -156,3 +158,5 @@ rs: fclean all
 	@$(SANITIZE)
 
 .PHONY:		all clean fclean re bonus rebonus
+
+#valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes
