@@ -13,7 +13,6 @@ typedef struct s_file
 	char	*ea_path;
 	char	*d_path;
 	char	*f_path;
-	char	*s_path;
 	int		color_floor;
 	int		color_ceiling;
 	int		map_col;
@@ -168,6 +167,11 @@ typedef struct s_game
 	int			open;
 	int			close;
 	int			door;
+	int			item;
+	int			weapon;
+	t_tex		weapon_tex[2];
+	t_tex		life_tex[4];
+	t_tex		item_tex[7];
 	t_sprite	*sprite;
 	t_data		data;
 	t_tex		*tex;
@@ -178,6 +182,10 @@ typedef struct s_game
 	t_map		map;
 	t_color		color;
 	t_square	square;
+	t_int_coord	pos;
+	t_int_coord	pos_life;
+	t_int_coord	pos_item;
+	t_int_coord	pos_weapon;
 }				t_game;
 
 #endif

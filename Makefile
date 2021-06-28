@@ -60,7 +60,7 @@ BONUS_FILES = $(SRC_BONUS)bitmap_bonus.c\
 			$(SRC_BONUS)events_bonus.c\
 			$(SRC_BONUS)get_param_bonus.c\
 			$(SRC_BONUS)graphics_bonus.c\
-			$(SRC_BONUS)limbo_bonus.c\
+			$(SRC_BONUS)special_wall_bonus.c\
 			$(SRC_BONUS)minimap_bonus.c\
 			$(SRC_BONUS)parsing_color_bonus.c\
 			$(SRC_BONUS)parsing_file_bonus.c\
@@ -70,13 +70,17 @@ BONUS_FILES = $(SRC_BONUS)bitmap_bonus.c\
 			$(SRC_BONUS)raycasting_bonus.c\
 			$(SRC_BONUS)raycasting2_bonus.c\
 			$(SRC_BONUS)raycasting3_bonus.c\
+			$(SRC_BONUS)render_life_bonus.c\
+			$(SRC_BONUS)render_item_bonus.c\
+			$(SRC_BONUS)render_weapon_bonus.c\
 			$(SRC_BONUS)sprites_bonus.c\
 			$(SRC_BONUS)sprites_init_bonus.c\
 			$(SRC_BONUS)sprites_utils_bonus.c\
+			$(SRC_BONUS)sprite_and_textures_bonus.c\
 			$(SRC_BONUS)sprites2_bonus.c\
 			$(SRC_BONUS)sprites3_bonus.c\
 			$(SRC_BONUS)textures_bonus.c\
-			$(SRC_BONUS)textures2_bonus.c\
+			$(SRC_BONUS)free_textures_bonus.c\
 			$(SRC_BONUS)walls_bonus.c\
 			$(SRC_BONUS)walls2_bonus.c
 
@@ -87,7 +91,7 @@ BONUS_OBJECTS = bitmap_bonus.o\
 			events_bonus.o\
 			get_param_bonus.o\
 			graphics_bonus.o\
-			limbo_bonus.o\
+			special_wall_bonus.o\
 			minimap_bonus.o\
 			parsing_color_bonus.o\
 			parsing_file_bonus.o\
@@ -97,13 +101,17 @@ BONUS_OBJECTS = bitmap_bonus.o\
 			raycasting_bonus.o\
 			raycasting2_bonus.o\
 			raycasting3_bonus.o\
+			render_life_bonus.o\
+			render_item_bonus.o\
+			render_weapon_bonus.o\
 			sprites_bonus.o\
 			sprites_init_bonus.o\
 			sprites_utils_bonus.o\
+			sprite_and_textures_bonus.o\
 			sprites2_bonus.o\
 			sprites3_bonus.o\
 			textures_bonus.o\
-			textures2_bonus.o\
+			free_textures_bonus.o\
 			walls_bonus.o\
 			walls2_bonus.o\
 

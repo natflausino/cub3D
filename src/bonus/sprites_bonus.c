@@ -4,7 +4,7 @@ void	sprite_height(t_game *game, int *start, int *end, int *i)
 {
 	if (*end - *start >= game->file.height)
 	{
-		*i += -*start;
+		*i += -(*start);
 		*start = 0;
 		*end = game->file.height;
 	}
@@ -29,7 +29,7 @@ void	draw_sprite(t_game *game, int x, int s_pos, int sp)
 		color = game->sprite[sp].tex.addr[y * game->sprite[sp].tex.tex_width
 			+ (int)(x * (double)game->sprite[sp].tex.tex_height
 				/ (double)game->s_hei)];
-		if (color != 0x00ff00) //Trocar a cor (0x) para poder usar transparencia na imagem!!!
+		if (color != 0x00ff00)
 			if (s_pos + x >= 0 && s_pos + x < game->file.width)
 				if (game->ray.dist_wall[x + s_pos] > game->sprite[sp].dist)
 					game->data.addr[start * game->file.width + x + s_pos]

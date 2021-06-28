@@ -32,6 +32,7 @@ typedef struct s_data
 	int		line_len;
 	int		endian;
 }				t_data;
+
 typedef struct s_player
 {
 	double	x;
@@ -46,6 +47,7 @@ typedef struct s_player
 	double	walk_speed;
 	double	turn_speed;
 }				t_player;
+
 typedef struct s_ray
 {
 	double		angle;

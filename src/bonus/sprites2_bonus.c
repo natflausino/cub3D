@@ -52,7 +52,7 @@ void	find_sprite(t_game *game)
 		j = -1;
 		while (++j < game->file.map_col)
 		{
-			if (game->file.tab[i][j] >= '2' && game->file.tab[i][j] <= '6')
+			if (game->file.tab[i][j] >= '2' && game->file.tab[i][j] <= '5')
 				find_sprite_2(game, i, j, &k);
 			if (game->file.tab[i][j] == '3' && game->sprite->damage == 1)
 				find_sprite_2_aux(game, i, j);
@@ -62,8 +62,8 @@ void	find_sprite(t_game *game)
 				find_sprite_3_aux(game, i, j);
 			if (game->file.tab[i][j] == '7' && game->close == 1)
 				find_sprite_3_aux1(game, i, j);
-			//if (game->file.tab[i][j] == '5' && game->sprite->win == 1)
-			//	find_sprite_4(game, i, j);
+			if (game->file.tab[i][j] == '5' && game->sprite->win == 1)
+				find_sprite_4(game, i, j);
 		}
 	}
 }

@@ -72,6 +72,9 @@ void	set_param(t_game *game)
 	game->tex = ft_calloc(8, sizeof(t_tex));
 	find_sprite_init(game);
 	load_sprite(game);
+	load_life(game);
+	load_item(game);
+	load_weapon(game);
 	texture_load(game);
 	player_position(game);
 	player_facing(game);

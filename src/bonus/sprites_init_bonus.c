@@ -13,7 +13,7 @@ void	find_sprite_init(t_game *game)
 		j = -1;
 		while (++j < game->file.map_col)
 		{
-			if (game->file.tab[i][j] >= '2' && game->file.tab[i][j] <= '5')
+			if (game->file.tab[i][j] >= '2' && game->file.tab[i][j] <= '6')
 				find_sprite_2_init(game, i, j, &k);
 		}
 	}

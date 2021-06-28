@@ -44,3 +44,42 @@ void	free_textures2(t_game *game)
 		game->file.f_path = NULL;
 	}
 }
+
+void	free_life(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i <= 3)
+	{
+		if (game->life_tex[i].img)
+			mlx_destroy_image(game->data.mlx, game->life_tex[i].img);
+		i++;
+	}
+}
+
+void	free_item(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i <= 6)
+	{
+		if (game->item_tex[i].img)
+			mlx_destroy_image(game->data.mlx, game->item_tex[i].img);
+		i++;
+	}
+}
+
+void	free_weapon(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	while (i <= 1)
+	{
+		if (game->weapon_tex[i].img)
+			mlx_destroy_image(game->data.mlx, game->weapon_tex[i].img);
+		i++;
+	}
+}

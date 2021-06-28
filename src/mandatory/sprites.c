@@ -4,7 +4,7 @@ void	sprite_height(t_game *game, int *start, int *end, int *i)
 {
 	if (*end - *start >= game->file.height)
 	{
-		*i += -*start;
+		*i += -(*start);
 		*start = 0;
 		*end = game->file.height;
 	}

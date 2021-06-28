@@ -3,9 +3,11 @@
 int	close_window(t_game *game)
 {
 	free_sprites(game);
-	free(game->sprite);
 	game->sprite = NULL;
 	free_textures(game);
+	free_life(game);
+	free_item(game);
+	free_weapon(game);
 	free(game->tex);
 	game->tex = NULL;
 	free(game->ray.dist_wall);
@@ -44,6 +46,8 @@ int	press_key(int key, t_game *game)
 	}
 	if (key == SHIFT)
 		game->open = 1;
+	if (key == CTRL)
+		game->weapon = 1;
 	return (0);
 }
 
@@ -68,6 +72,8 @@ int	release_key(int key, t_game *game)
 	}
 	if (key == SHIFT)
 		game->close = 1;
+	if (key == CTRL)
+		game->weapon = 0;
 	return (0);
 }
 

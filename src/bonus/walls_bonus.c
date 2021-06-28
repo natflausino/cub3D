@@ -22,7 +22,7 @@ void	draw_strip(t_game *game, int x, int side, int strip_height)
 	{
 		y_tex = i * game->tex[side].tex_height / (double)strip_height;
 		color = game->tex[WALL].addr[y_tex * game->tex[side].tex_width + x_tex];
-		color = limbo_wall(game, color);
+		color = special_wall(game, color);
 		game->data.addr[start * game->file.width + x] = color;
 		i++;
 		start++;
@@ -58,7 +58,7 @@ void	color_floor_ceiling(t_game *game, double wall_height, int i)
 	while (j < start)
 	{
 		color = game->file.color_ceiling;
-		color = limbo_ceiling(game, color);
+		color = special_ceiling(game, color);
 		if (j * game->file.width + i > 0)
 			game->data.addr[j * game->file.width + i] = color;
 		j++;
@@ -79,7 +79,7 @@ void	floor_texture(t_game *game, int i, int j, double wall_height)
 		y_tex = j * game->tex[F_TEX].tex_height / (double)wall_height;
 		color = game->tex[F_TEX].addr[(int)(x_tex
 				* game->tex[F_TEX].tex_height + y_tex)];
-		color = limbo_floor(game, color);
+		color = special_floor(game, color);
 		if (color > 0x00ff00)
 			game->data.addr[j * game->file.width + i] = color;
 		j++;

@@ -67,6 +67,9 @@ int		check_digit(char *tab, char *set);
 void	screen_resolution(t_game *game);
 void	draw(t_game *game);
 int		update(t_game *game);
+void	image_put_pixel(t_game *game, int x, int y, int color);
+void	draw_rect(t_game *game, int color);
+void	draw_line(t_game *game, t_int_coord p0, t_int_coord p1);
 
 /******************************************************************************
 **	PARSING COLOR
@@ -138,6 +141,34 @@ void	render_sprite(t_game *game);
 void	sprite_visible(t_game *game, int x, int y);
 void	find_sprite(t_game *game);
 void	num_sprites(t_game *game);
+void	hor_sprite_collider(t_game *game, double next_x, double next_y);
+void	ver_sprite_collider(t_game *game, double next_x, double next_y);
+void	damage_cure(t_game *game, int x, int y, int dist);
+char	*type_define(int tex, int id);
+void	load_sprite(t_game *game);
+void	free_sprites(t_game *game);
+void	find_sprite_2(t_game *game, int i, int j, int *k);
+void	find_sprite_3(t_game *game, int i, int j);
+void	find_sprite_2_aux(t_game *game, int i, int j);
+void	find_sprite_3_aux(t_game *game, int i, int j);
+void	find_sprite_3_aux1(t_game *game, int i, int j);
+void	find_sprite_4(t_game *game, int i, int j);
+void	win(t_game *game, int x, int y, int dist);
+void	effect(t_game *game, int x, int y, int dist);
+void	find_sprite_init(t_game *game);
+void	find_sprite_2_init(t_game *game, int i, int j, int *k);
+void	load_life(t_game *game);
+void	free_life(t_game *game);
+void	render_lifebar(t_game *game);
+int		get_color_life(t_tex *life_tex, int life_x, int life_y);
+void	free_item(t_game *game);
+void	render_item(t_game *game);
+void	load_item(t_game *game);
+int		get_color_item(t_tex *item_tex, int item_x, int item_y);
+void	load_weapon(t_game *game);
+void	free_weapon(t_game *game);
+void	render_weapon(t_game *game);
+int		get_color_weapon(t_tex *weapon_tex, int weapon_x, int weapon_y);
 
 /******************************************************************************
 **	TEXTURES
@@ -160,44 +191,24 @@ int		is_wall(t_game *game, int x, int y);
 int		check_wall(t_game *game, double new_x, double new_y);
 void	color_floor_ceiling(t_game *game, double wall_height, int i);
 void	floor_texture(t_game *game, int i, int j, double wall_height);
-int		limbo_floor(t_game *game, int color);
-int		limbo_wall(t_game *game, int color);
-int		limbo_ceiling(t_game *game, int color);
+int		special_floor(t_game *game, int color);
+int		special_ceiling(t_game *game, int color);
+int		special_wall(t_game *game, int color);
 
 /******************************************************************************
-**	BONUS
+**	MINIMAP
 ******************************************************************************/
 
-void	image_put_pixel(t_game *game, int x, int y, int color);
-void	draw_rect(t_game *game, int color);
 void	minimap(t_game *game);
 void	minimap_player(t_game *game);
 void	minimap_rays(t_game *game);
-void	draw_line(t_game *game, t_int_coord p0, t_int_coord p1);
+
+/******************************************************************************
+**	DOOR
+******************************************************************************/
+
 int		door(t_game *game, int x, int y, int dist);
-void	damage_cure(t_game *game, int x, int y, int dist);
 void	hor_door_collider(t_game *game, double next_x, double next_y);
 void	ver_door_collider(t_game *game, double next_x, double next_y);
-void	hor_sprite_collider(t_game *game, double next_x, double next_y);
-void	ver_sprite_collider(t_game *game, double next_x, double next_y);
-
-/*
-**	Sprites bonus
-*/
-
-char	*type_define(int tex, int id);
-void	load_sprite(t_game *game);
-void	free_sprites(t_game *game);
-void	find_sprite_2(t_game *game, int i, int j, int *k);
-void	find_sprite_3(t_game *game, int i, int j);
-void	find_sprite_2_aux(t_game *game, int i, int j);
-void	find_sprite_3_aux(t_game *game, int i, int j);
-void	find_sprite_3_aux1(t_game *game, int i, int j);
-void	find_sprite_4(t_game *game, int i, int j);
-void	win(t_game *game, int x, int y, int dist);
-void	effect(t_game *game, int x, int y, int dist);
-
-void	find_sprite_init(t_game *game);
-void	find_sprite_2_init(t_game *game, int i, int j, int *k);
 
 #endif

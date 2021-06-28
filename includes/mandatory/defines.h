@@ -10,13 +10,10 @@
 # define KEYRELEASE 3
 # define ESC 0x00ff1b
 # define WIN_BUTTON_X 33
-# define MOUSE_1 1
 # define W 0x0077
+# define A 0x0061
 # define S 0x0073
 # define D 0x0064
-# define A 0x0061
-# define UP 0x00ff52
-# define DOWN 0x00ff54
 # define RIGHT 0x00ff53
 # define LEFT 0x00ff51
 
